@@ -1,0 +1,160 @@
+---
+- :time_value: 2018-11-04 23:59:59.000000000 +11:00
+  :y_value: 10
+  :apparent: non-existence
+- :time_value: 2018-11-11 23:59:59.000000000 +11:00
+  :y_value: 24
+  :apparent: normal
+- :time_value: 2018-11-18 23:59:59.000000000 +11:00
+  :y_value: 21
+  :apparent: normal
+- :time_value: 2018-11-25 23:59:59.000000000 +11:00
+  :y_value: 31
+  :apparent: normal
+- :time_value: 2018-12-02 23:59:59.000000000 +11:00
+  :y_value: 39
+  :apparent: emergency
+- :time_value: 2018-12-09 23:59:59.000000000 +11:00
+  :y_value: 65
+  :apparent: normal
+- :time_value: 2018-12-16 23:59:59.000000000 +11:00
+  :y_value: 118
+  :apparent: normal
+- :time_value: 2018-12-23 23:59:59.000000000 +11:00
+  :y_value: 116
+  :apparent: emergency
+- :time_value: 2018-12-30 23:59:59.000000000 +11:00
+  :y_value: 143
+  :apparent: normal
+- :time_value: 2019-01-06 23:59:59.000000000 +11:00
+  :y_value: 160
+  :apparent: affluence
+- :time_value: 2019-01-13 23:59:59.000000000 +11:00
+  :y_value: 221
+  :apparent: emergency
+- :time_value: 2019-01-20 23:59:59.000000000 +11:00
+  :y_value: 215
+  :apparent: normal
+- :time_value: 2019-01-27 23:59:59.000000000 +11:00
+  :y_value: 262
+  :apparent: normal
+- :time_value: 2019-02-03 23:59:59.000000000 +11:00
+  :y_value: 318
+  :apparent: normal
+- :time_value: 2019-02-10 23:59:59.000000000 +11:00
+  :y_value: 307
+  :apparent: emergency
+- :time_value: 2019-02-17 23:59:59.000000000 +11:00
+  :y_value: 317
+  :apparent: emergency
+- :time_value: 2019-02-24 23:59:59.000000000 +11:00
+  :y_value: 312
+  :apparent: normal
+- :time_value: 2019-03-03 23:59:59.000000000 +11:00
+  :y_value: 314
+  :apparent: normal
+- :time_value: 2019-03-10 23:59:59.000000000 +11:00
+  :y_value: 335
+  :apparent: normal
+- :time_value: 2019-03-17 23:59:59.000000000 +11:00
+  :y_value: 372
+  :apparent: normal
+- :time_value: 2019-03-24 23:59:59.000000000 +11:00
+  :y_value: 398
+  :apparent: normal
+- :time_value: 2019-03-31 23:59:59.000000000 +11:00
+  :y_value: 397
+  :apparent: normal
+- :time_value: 2019-04-07 22:59:59.000000000 +10:00
+  :y_value: 446
+  :apparent: danger
+- :time_value: 2019-04-14 22:59:59.000000000 +10:00
+  :y_value: 385
+  :apparent: emergency
+- :time_value: 2019-04-21 22:59:59.000000000 +10:00
+  :y_value: 387
+  :apparent: emergency
+- :time_value: 2019-04-28 22:59:59.000000000 +10:00
+  :y_value: 385
+  :apparent: emergency
+- :time_value: 2019-05-05 22:59:59.000000000 +10:00
+  :y_value: 392
+  :apparent: emergency
+- :time_value: 2019-05-12 22:59:59.000000000 +10:00
+  :y_value: 387
+  :apparent: emergency
+- :time_value: 2019-05-19 22:59:59.000000000 +10:00
+  :y_value: 398
+  :apparent: normal
+- :time_value: 2019-05-26 22:59:59.000000000 +10:00
+  :y_value: 446
+  :apparent: normal
+- :time_value: 2019-06-02 22:59:59.000000000 +10:00
+  :y_value: 441
+  :apparent: normal
+- :time_value: 2019-06-09 22:59:59.000000000 +10:00
+  :y_value: 435
+  :apparent: danger
+- :time_value: 2019-06-16 22:59:59.000000000 +10:00
+  :y_value: 447
+  :apparent: normal
+- :time_value: 2019-06-23 22:59:59.000000000 +10:00
+  :y_value: 460
+  :apparent: normal
+- :time_value: 2019-06-30 22:59:59.000000000 +10:00
+  :y_value: 458
+  :apparent: normal
+- :time_value: 2019-07-07 22:59:59.000000000 +10:00
+  :y_value: 458
+  :apparent: emergency
+- :time_value: 2019-07-14 22:59:59.000000000 +10:00
+  :y_value: 480
+  :apparent: normal
+- :time_value: 2019-07-21 22:59:59.000000000 +10:00
+  :y_value: 505
+  :apparent: normal
+- :time_value: 2019-07-28 22:59:59.000000000 +10:00
+  :y_value: 514
+  :apparent: normal
+- :time_value: 2019-08-04 22:59:59.000000000 +10:00
+  :y_value: 489
+  :apparent: emergency
+- :time_value: 2019-08-11 22:59:59.000000000 +10:00
+  :y_value: 505
+  :apparent: emergency
+- :time_value: 2019-08-18 22:59:59.000000000 +10:00
+  :y_value: 517
+  :apparent: normal
+- :time_value: 2019-08-25 22:59:59.000000000 +10:00
+  :y_value: 545
+  :apparent: danger
+- :time_value: 2019-09-01 22:59:59.000000000 +10:00
+  :y_value: 545
+  :apparent: normal
+- :time_value: 2019-09-08 22:59:59.000000000 +10:00
+  :y_value: 596
+  :apparent: danger
+- :time_value: 2019-09-15 22:59:59.000000000 +10:00
+  :y_value: 626
+  :apparent: emergency
+- :time_value: 2019-09-22 22:59:59.000000000 +10:00
+  :y_value: 655
+  :apparent: normal
+- :time_value: 2019-09-29 22:59:59.000000000 +10:00
+  :y_value: 636
+  :apparent: danger
+- :time_value: 2019-10-06 23:59:59.000000000 +11:00
+  :y_value: 559
+  :apparent: normal
+- :time_value: 2019-10-13 23:59:59.000000000 +11:00
+  :y_value: 643
+  :apparent: normal
+- :time_value: 2019-10-20 23:59:59.000000000 +11:00
+  :y_value: 650
+  :apparent: normal
+- :time_value: 2019-10-27 23:59:59.000000000 +11:00
+  :y_value: 647
+  :apparent: emergency
+- :time_value: 2019-11-03 23:59:59.000000000 +11:00
+  :y_value: 640
+  :apparent: danger
