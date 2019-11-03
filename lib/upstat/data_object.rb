@@ -4,7 +4,7 @@ module Upstat
 
       def load_yaml(file_name)
         begin
-          verify(YAML.load(File.read(file_name)).to_openstruct)
+          localise(YAML.load(File.read(file_name)).to_openstruct)
         rescue => e
           raise e
         end
@@ -13,7 +13,7 @@ module Upstat
 
       def load_json(file_name)
         begin
-          verify(JSON.parse(File.read(file_name), symbolize_names: true).to_openstruct)
+          localise(JSON.parse(File.read(file_name), symbolize_names: true).to_openstruct)
         rescue => e
           raise e
         end
@@ -21,9 +21,11 @@ module Upstat
 
       private
 
-      def verify(records)
+      def localise(records, time_fields = ['time_value'])
         records.each do |data|
-          data.time_value = Time.parse(data.time_value) if data.time_value.is_a?(String)
+          time_fields.each do
+            data.send(time_value) = Time.parse(data.send(time_value)).localtime
+          end
         end
         records
       end

@@ -11,45 +11,18 @@ HISTORY_DATA_FILE = "./spec/support/data/history.yml"
 DAY_SECONDS = 86400
 WEEK_SECONDS = 604800
 
-def generate_raw_data(file_name, years=1)
-  now = Time.now
-  date_start = Time.new(now.year-years, now.month, now.day)
-  date_end = Time.new(now.year, now.month, now.day)
-
-  increment = 3
-  base = 0
-  days_array = []
-  now = date_start
-  while now <= date_end
-    large_increment = rand(100)
-    value = rand(10)
-    if value < 1
-      base = base + increment
-    end
-    if value > 9
-      base = base - increment
-    end
-    if large_increment > 99
-      base = base + (increment * 4)
-    end
-    days_array << { time_value: now.strftime("%Y-%m-%d"), y_value: value+base }
-    now = now + DAY_SECONDS
-  end
-
-  File.open(file_name, 'w') do |f|
-    f.write days_array.to_yaml
-  end
-end
-
 def load_data()
   period_data = YAML.load(File.read(BASE_DATA_FILE))
   period_data.each do |data|
-    data[:time_value] = Time.parse(data[:time_value])
+    data[:time_value] = Time.parse(data[:time_value]).localtime
   end
   period_data
 end
 
 def save_period_data(period_hash)
+  period_hash.each do |data|
+    data[:time_value] = Time.parse(data[:time_value]).utc.iso8601
+  end
   File.open(HISTORY_DATA_FILE, 'w') do |f|
     f.write period_hash.to_yaml
   end
@@ -109,6 +82,6 @@ def generate_history(period_data)
 
 end
 
-# generate_raw_data(BASE_DATA_FILE)
+# Extensions::Utils.generate_raw_data(BASE_DATA_FILE, 1)
 # generate_periods(load_data(BASE_DATA_FILE))
 generate_history(load_data(HISTORY_DATA_FILE))
