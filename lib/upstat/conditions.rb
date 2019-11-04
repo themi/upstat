@@ -94,7 +94,7 @@ module Upstat
       if y_values.size <= 1
         @apparent = NON_EXISTENCE
       else
-        trend = Extensions::Trend.new(y_values)
+        trend = Trend.new(y_values)
         @apparent = self.class.select_condition(trend.slope).condition
       end
     end

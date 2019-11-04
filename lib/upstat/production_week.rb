@@ -2,7 +2,7 @@
 
 require 'time'
 
-module Extensions # no-doc
+module Upstat # no-doc
   # variables specifying the production hour and day
   # defaults to 0 o'clock on monday morning (or midnight Sunday)
   def self.production_hour_of_day
@@ -30,8 +30,8 @@ module Extensions # no-doc
   #   FIRST! initialise varables on app bootup:
   #
   #     # defaults to 0 o'clock Monday morning (or Midnight Sunday)
-  #     Extensions.production_hour_of_day = 14 # default is 0
-  #     Extensions.production_day_of_week = 4  # default is 1
+  #     Upstat.production_hour_of_day = 14 # default is 0
+  #     Upstat.production_day_of_week = 4  # default is 1
   #
   #   Then:
   #
@@ -45,13 +45,13 @@ module Extensions # no-doc
     # date, time and zone
     #
     def production_beginning_of_week
-      bow_time = Extensions.production_hour_of_day * SECONDS_PER_HOUR
+      bow_time = Upstat.production_hour_of_day * SECONDS_PER_HOUR
 
       today = Time.new(self.year, self.month, self.day)
 
       time_offset = (Time.now.to_i - today.to_i) - bow_time
 
-      bow_day = today - (((today.wday - Extensions.production_day_of_week) % 7) * SECONDS_PER_DAY)
+      bow_day = today - (((today.wday - Upstat.production_day_of_week) % 7) * SECONDS_PER_DAY)
 
       if time_offset < 0
         bow_day - (7 * SECONDS_PER_DAY) + bow_time
@@ -73,5 +73,5 @@ module Extensions # no-doc
 end
 
 class Time
-  include Extensions::ProductionWeek
+  include Upstat::ProductionWeek
 end

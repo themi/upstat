@@ -1,6 +1,6 @@
 # Lifted from https://github.com/zero-one-software/linear_regression_trend
 
-module Extensions
+module Upstat
   class Trend
     attr_accessor :slope, :intercept
 

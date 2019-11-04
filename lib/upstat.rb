@@ -16,4 +16,6 @@ module Upstat
 end
 
 require "upstat/version"
+require "upstat/production_week"
+require "upstat/trend"
 require "upstat/conditions"
