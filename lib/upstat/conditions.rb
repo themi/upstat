@@ -78,7 +78,7 @@ module Upstat
     #      { time_value: 2019-09-30, y_value: 4 }
     #   ]
     #
-    def initialize(period, period_history=[], all_history=false, aggregate_by="sum")
+    def initialize(period, period_history=[], all_history=true, aggregate_by="sum")
       @period = period
       @period_history = period_history
       @all_history = all_history
@@ -143,11 +143,7 @@ module Upstat
           if recent_power?
             true
           elsif recent_affluence?
-            if danger_since?
-              false
-            else
-              true
-            end
+            !danger_since?
           end
         end
       else
@@ -160,9 +156,12 @@ module Upstat
     # -----
 
     def danger_since?
-      ndx = find_recent_history_for(AFFLUENCE)
-      since = period_history[ndx].time_value
-      period_history.select { |p| p.time_value > since && p.apparent == DANGER }.any?
+      if (ndx = find_recent_history_for(AFFLUENCE))
+        since = period_history[ndx].time_value
+        period_history.select { |p| p.time_value > since && p.apparent == DANGER }.any?
+      else
+        false
+      end
     end
 
     def recent_power?
