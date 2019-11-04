@@ -46,8 +46,8 @@ module Upstat
     attr_accessor :period, :period_history, :all_history, :aggregate_by
     attr_accessor :apparent
 
-    # :period_history is Upstat::DataObject of 12 or more __previous__ data points,order by time_value: :ascending and excluding what is within :period
-    # :period is  an Upstat::DataObject of 3 or more subdivisions of the current or upcoming period (eg. if :period_history is weeks, then :period is days)
+    # :period_history is Upstat::DataTable or ActiveRecord of 12 or more __previous__ data points,order by time_value: :ascending and excluding what is within :period
+    # :period is  an Upstat::DataTable or ActiveRecord of 3 or more subdivisions of the current or upcoming period (eg. if :period_history is weeks, then :period is days)
     # :all_history is a boolean where:
     #   - true = :period_history contains all existing period datasets
     #   - false = :period_history contains a recent subset of all existing data points

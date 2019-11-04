@@ -1,6 +1,7 @@
-module Upstat
-  class DataTable
-    extend Extensions::Utils
+module Extensions
+  module DataTable
+
+    extend Extensions::DataStorage
 
     def self.open(file_name)
       if defined?(ActiveRecord) && file_name.class.ancestors.include?(ActiveRecord::Base)
@@ -14,10 +15,10 @@ module Upstat
         elsif [".json"].include?(ename)
           get_json(file_name)
         end
-        DataTable.new(data)
+        self.new(data)
 
       elsif file_name.is_a?(Array)
-        DataTable.new(file_name.to_openstruct)
+        self.new(file_name.to_openstruct)
 
       end
     end
@@ -29,7 +30,7 @@ module Upstat
     end
 
     def <<(item)
-      DataTable.new(item, self)
+      self.new(item, self)
     end
 
     def each(&block)

@@ -1,6 +1,6 @@
-RSpec.describe Extensions::Utils do
+RSpec.describe Extensions::DataStorage do
   class TestUtils
-    include Extensions::Utils
+    include Extensions::DataStorage
   end
 
   describe "public methods defined" do
@@ -21,30 +21,14 @@ RSpec.describe Extensions::Utils do
     subject { TestUtils.new.get_yaml(file_name) }
 
     let(:file_name) { File.join(File.dirname(__FILE__), "../support/data/yaml_test.yml") }
-    it "succesfully loads records" do
-      expect(subject).to be_a(Array)
-    end
-    it "rows are OpenStruct objects" do
-      expect(subject.first).to be_a(OpenStruct)
-    end
-    it "there are 2 rows" do
-      expect(subject.count).to eq(2)
-    end
+    it_behaves_like "extension data object class"
   end
 
   describe "#get_json" do
     subject { TestUtils.new.get_json(file_name) }
 
     let(:file_name) { File.join(File.dirname(__FILE__), "../support/data/json_test.json") }
-    it "succesfully loads records" do
-      expect(subject).to be_a(Array)
-    end
-    it "rows are OpenStruct objects" do
-      expect(subject.first).to be_a(OpenStruct)
-    end
-    it "there are 2 rows" do
-      expect(subject.count).to eq(2)
-    end
+    it_behaves_like "extension data object class"
   end
 
 end

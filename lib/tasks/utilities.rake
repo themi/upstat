@@ -3,6 +3,7 @@ require "extensions"
 namespace :data do
   class Util
     extend Extensions::Utils
+    extend Extensions::DataStorage
   end
 
   desc "Generate random sample (daily) stats"
@@ -10,7 +11,10 @@ namespace :data do
 
     args.with_defaults(:folder => File.expand_path("./sample.yml"), :years => 1)
 
-    Util.generate_sample_data args.folder, args.years
+    data = Util.generate_sample_data(args.years)
+
+    Util.save_yaml(data, args.folder)
+    puts "Raw (daily) stats saved to file: #{args.folder}" if verbose
   end
 
 end
