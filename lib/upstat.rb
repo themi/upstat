@@ -17,4 +17,4 @@ end
 
 require "upstat/version"
 require "upstat/conditions"
-require "upstat/data_object"
+require "upstat/data_table"

@@ -1,8 +1,7 @@
 require "bundler/setup"
 require "upstat"
+require "timecop"
 require "byebug"
-
-require_relative "support/utilities"
 
 RSpec.configure do |config|
   # Enable flags like --only-failures and --next-failure
