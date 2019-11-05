@@ -43,7 +43,7 @@ module Upstat
       end
     end
 
-    attr_accessor :period, :period_history, :all_history, :aggregate_by
+    attr_accessor :period, :period_history, :all_history
     attr_accessor :apparent
 
     # :period_history is Upstat::DataTable or ActiveRecord of 12 or more __previous__ data points,order by time_value: :ascending and excluding what is within :period
@@ -51,7 +51,6 @@ module Upstat
     # :all_history is a boolean where:
     #   - true = :period_history contains all existing period datasets
     #   - false = :period_history contains a recent subset of all existing data points
-    # :aggregate_by is a string containing: "sum", "avg", or any other Math aggregrate method.
     #
     # Example Data: period = Weeks
     #   period_history: [
@@ -78,11 +77,10 @@ module Upstat
     #      { time_value: 2019-09-30, y_value: 4 }
     #   ]
     #
-    def initialize(period, period_history=[], all_history=true, aggregate_by="sum")
+    def initialize(period, period_history=[], all_history=true)
       @period = period
       @period_history = period_history
       @all_history = all_history
-      @aggregate_by = aggregate_by
     end
 
     # Calculate the condition for the data points within period.

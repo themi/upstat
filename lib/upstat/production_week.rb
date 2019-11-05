@@ -45,13 +45,13 @@ module Upstat # no-doc
     # date, time and zone
     #
     def production_beginning_of_week
-      bow_time = Upstat.production_hour_of_day * SECONDS_PER_HOUR
-
       today = Time.new(self.year, self.month, self.day)
 
-      time_offset = (Time.now.to_i - today.to_i) - bow_time
-
       bow_day = today - (((today.wday - Upstat.production_day_of_week) % 7) * SECONDS_PER_DAY)
+
+      bow_time = Upstat.production_hour_of_day * SECONDS_PER_HOUR
+
+      time_offset = (Time.now.to_i - today.to_i) - bow_time
 
       if time_offset < 0
         bow_day - (7 * SECONDS_PER_DAY) + bow_time
