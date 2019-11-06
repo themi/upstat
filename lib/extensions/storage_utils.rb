@@ -2,7 +2,27 @@ require 'time'
 require 'yaml'
 
 module Extensions
-  module DataStorage
+  module StorageUtils
+
+    def open(file_name)
+      if defined?(ActiveRecord) && file_name.class.ancestors.include?(ActiveRecord::Base)
+        file_name
+
+      elsif file_name.is_a?(String)
+        ename = File.extname(File.expand_path(file_name))
+
+        data = if [".yaml", ".yml"].include?(ename)
+          get_yaml(file_name)
+        elsif [".json"].include?(ename)
+          get_json(file_name)
+        end
+        DataTable.new(data)
+
+      elsif file_name.is_a?(Array)
+        DataTable.new(file_name.to_openstruct)
+
+      end
+    end
 
     def get_yaml(file_name, time_fields=["time_value"])
       begin

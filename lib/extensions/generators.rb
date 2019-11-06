@@ -1,6 +1,6 @@
 
 module Extensions
-  module Utils
+  module Generators
 
     DAY_SECONDS = 86400
 

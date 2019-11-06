@@ -1,6 +1,6 @@
-RSpec.describe Extensions::DataStorage do
+RSpec.describe Extensions::StorageUtils do
   class TestUtils
-    include Extensions::DataStorage
+    include Extensions::StorageUtils
   end
 
   describe "public methods defined" do

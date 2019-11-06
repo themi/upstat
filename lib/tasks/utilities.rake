@@ -2,8 +2,8 @@ require "extensions"
 
 namespace :data do
   class Util
-    extend Extensions::Utils
-    extend Extensions::DataStorage
+    extend Extensions::Generators
+    extend Extensions::StorageUtils
   end
 
   desc "Generate random sample (daily) stats"
