@@ -15,8 +15,8 @@ RSpec.describe Upstat::ProductionWeek do
       let(:current_time) { Time.now }
 
       context "and default production week settings" do
-        it "production week starts at Midnight Monday 18 Nov 2019" do
-          expect(subject.iso8601).to eq('2019-11-18T00:00:00+11:00')
+        it "production week starts at Midnight Sunday 17 Nov 2019" do
+          expect(subject.iso8601).to eq('2019-11-17T00:00:00+11:00')
         end
       end
 

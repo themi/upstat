@@ -14,7 +14,7 @@ module Upstat # no-doc
   end
 
   def self.production_day_of_week
-    ::Thread.current[:production_day_of_week] || 1
+    ::Thread.current[:production_day_of_week] || 0
   end
 
   def self.production_day_of_week=(day=1)
@@ -31,7 +31,7 @@ module Upstat # no-doc
   #
   #     # defaults to 0 o'clock Monday morning (or Midnight Sunday)
   #     Upstat.production_hour_of_day = 14 # default is 0
-  #     Upstat.production_day_of_week = 4  # default is 1
+  #     Upstat.production_day_of_week = 4  # default is 0
   #
   #   Then:
   #

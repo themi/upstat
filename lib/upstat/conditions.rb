@@ -5,16 +5,21 @@ module Upstat
     end
 
     class << self
-      # NOTE: the coditions are not listed in correct sequence (emergency and normal, non-e and danger)
-      # deliberately done to allow for correct selection by method select_condition
+      # NOTES:
+      #   1. The coditions are not listed in correct sequence (emergency and normal, non-e and danger)
+      #   deliberately done since range.cover? is a kinda like an "overlap" - the test value can be true
+      #   for more than one range, thus they have been ordered to fit the desired outcome
+      #
+      #   2. The actual ranges are arbituary, based on my interpretation on what slope suits the condition.
+      #   The method is based on my judgement and not any specific calculation (if one even exists).
       CONDITIONS_OF_EXISTENCE = [
         Condition.new("power_change",  nil,                      nil),
         Condition.new(POWER,           nil,                      :normal_in_new_high_range?),
         Condition.new(AFFLUENCE,       1.249..Float::INFINITY,  nil),
-        Condition.new(EMERGENCY,      -0.3927..0,                :no_change_over_time?),
+        Condition.new(EMERGENCY,      -0.8..0,                :no_change_over_time?),
         Condition.new(NORMAL,          0..1.249,                nil),
         Condition.new(NON_EXISTENCE,  -Float::INFINITY..-1.249, nil),
-        Condition.new(DANGER,         -1.249..-0.3927,          :emergency_over_time?),
+        Condition.new(DANGER,         -1.249..-0.8,          :emergency_over_time?),
         Condition.new("liability",     nil, nil),
         Condition.new("doubt",         nil, nil),
         Condition.new("enemy",         nil, nil),

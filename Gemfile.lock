@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    upstat (1.0.1)
+    upstat (2.0.1)
 
 GEM
   remote: https://rubygems.org/

@@ -6,22 +6,22 @@ module Extensions
 
     def open(file_name)
       if defined?(ActiveRecord) && file_name.class.ancestors.include?(ActiveRecord::Base)
-        file_name
+        collection = file_name
 
       elsif file_name.is_a?(String)
         ename = File.extname(File.expand_path(file_name))
 
-        data = if [".yaml", ".yml"].include?(ename)
+        collection = if [".yaml", ".yml"].include?(ename)
           get_yaml(file_name)
         elsif [".json"].include?(ename)
           get_json(file_name)
         end
-        DataTable.new(data)
 
       elsif file_name.is_a?(Array)
-        DataTable.new(file_name.to_openstruct)
+        collection = file_name.to_openstruct
 
       end
+      collection
     end
 
     def get_yaml(file_name, time_fields=["time_value"])
@@ -59,18 +59,20 @@ module Extensions
     private
     # -----
 
+    # destined for hard storage thus final output is a string
     def utcise(data_table, file_name, time_fields=[:time_value])
-      set_storage_time_zone(data_table, time_fields, "utc")
-    end
-
-    def localise(data_table, file_name, time_fields=[:time_value])
-      set_storage_time_zone(data_table, time_fields, "localtime")
-    end
-
-    def set_storage_time_zone(data_table, time_fields, time_system)
       data_table.each do |row|
         time_fields.each do |field|
-          row[field] = Time.parse(row[field].to_s).send(time_system).iso8601
+          row[field] = Time.parse(row[field].to_s).utc.iso8601
+        end
+      end
+    end
+
+    # destined for [local] use thus final output is a Time object
+    def localise(data_table, file_name, time_fields=[:time_value])
+      data_table.each do |row|
+        time_fields.each do |field|
+          row[field] = Time.parse(row[field].to_s).localtime
         end
       end
     end

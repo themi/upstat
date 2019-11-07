@@ -3,6 +3,7 @@
   :y_value: 3
 - :time_value: '2018-11-04T13:00:00Z'
   :y_value: 9
+
 - :time_value: '2018-11-05T13:00:00Z'
   :y_value: 3
 - :time_value: '2018-11-06T13:00:00Z'
@@ -17,6 +18,7 @@
   :y_value: 3
 - :time_value: '2018-11-11T13:00:00Z'
   :y_value: 9
+
 - :time_value: '2018-11-12T13:00:00Z'
   :y_value: 6
 - :time_value: '2018-11-13T13:00:00Z'

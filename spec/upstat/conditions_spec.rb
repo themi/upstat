@@ -42,12 +42,12 @@ RSpec.describe Upstat::Conditions do
     end
 
     context "with down trend_angle lower limit" do
-      let(:trend_angle) { -0.3927 }
+      let(:trend_angle) { -0.8 }
       specify { expect(upstat.condition).to eq 'emergency' }
     end
 
     context "with medium down trend_angle upper limit" do
-      let(:trend_angle) { -0.392700000001 }
+      let(:trend_angle) { -0.800000001 }
       specify { expect(upstat.condition).to eq 'danger' }
     end
 

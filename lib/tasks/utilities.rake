@@ -2,7 +2,7 @@ require "extensions"
 
 namespace :data do
   class Util
-    extend Extensions::Generators
+    extend Extensions::Helpers
     extend Extensions::StorageUtils
   end
 
