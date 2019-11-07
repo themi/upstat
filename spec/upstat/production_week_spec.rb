@@ -9,7 +9,7 @@ RSpec.describe Upstat::ProductionWeek do
       end
       after do
         Timecop.return
-        Upstat.production_day_of_week = 1
+        Upstat.production_day_of_week = 0
         Upstat.production_hour_of_day = 0
       end
       let(:current_time) { Time.now }
