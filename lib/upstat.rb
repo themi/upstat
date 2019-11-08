@@ -1,6 +1,7 @@
 require 'extensions'
 
 module Upstat
+  DAY_SECONDS    = 86400
   OVER_TIME_SIZE = 3
   AFFLUENCE      = "affluence"
   DANGER         = "danger"
@@ -19,3 +20,4 @@ require "upstat/version"
 require "upstat/production_week"
 require "upstat/trend"
 require "upstat/conditions"
+require "upstat/helpers"

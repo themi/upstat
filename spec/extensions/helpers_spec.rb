@@ -1,10 +1,10 @@
-RSpec.describe Extensions::Helpers do
+RSpec.describe Upstat::Helpers do
   class StorageUtils
-    extend Extensions::StorageUtils
+    extend Extensions::DataUtils
   end
 
   class TestHelper
-    extend Extensions::Helpers
+    extend Upstat::Helpers
 
     def self.raw_data
       [
