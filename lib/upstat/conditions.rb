@@ -12,6 +12,7 @@ module Upstat
       #
       #   2. The actual ranges are arbituary, based on my interpretation on what slope suits the condition.
       #   The method is based on my judgement and not any specific calculation (if one even exists).
+      #
       CONDITIONS_OF_EXISTENCE = [
         Condition.new("power_change",  nil,                      nil),
         Condition.new(POWER,           nil,                      :normal_in_new_high_range?),
@@ -51,36 +52,17 @@ module Upstat
     attr_accessor :period, :period_history, :aggregate_by, :all_history
     attr_accessor :apparent, :aggregate_total, :y_values
 
-    # :period_history is Upstat::DataTable or ActiveRecord of 12 or more __previous__ data points,order by time_value: :ascending and excluding what is within :period
-    # :period is  an Upstat::DataTable or ActiveRecord of 3 or more subdivisions of the current or upcoming period (eg. if :period_history is weeks, then :period is days)
-    # :all_history is a boolean where:
+    # :period_history is an Array(OpenStruct) of 12 or more __previous__
+    #    data points,order by time_value: :ascending and excluding what
+    #    is within :period.
+    # :period is an Array(OpenStruct) of 3 or more period subdivisions
+    #    of the current or upcoming period (eg. if :period_history is
+    #    weeks, then :period data points are days). Points must be evenly
+    #    distributed even if you have to insert missing points with an 'mean' value.
+    # :aggregate_by is a string eg. "sum", "avg", default is "sum"
+    # :all_history is a boolean, default is true, where:
     #   - true = :period_history contains all existing period datasets
     #   - false = :period_history contains a recent subset of all existing data points
-    #
-    # Example Data: period = Weeks
-    #   period_history: [
-    #      { time_value: 2019-07-15, y_value: 2 },
-    #      { time_value: 2019-07-22, y_value: 10 },
-    #      { time_value: 2019-07-29, y_value: 20 },
-    #      { time_value: 2019-08-05, y_value: 21 },
-    #      { time_value: 2019-08-12, y_value: 19 },
-    #      { time_value: 2019-08-19, y_value: 21 },
-    #      { time_value: 2019-08-26, y_value: 22 },
-    #      { time_value: 2019-09-02, y_value: 20 },
-    #      { time_value: 2019-09-09, y_value: 22 },
-    #      { time_value: 2019-09-16, y_value: 23 },
-    #      { time_value: 2019-09-23, y_value: 22 },
-    #      { time_value: 2019-09-30, y_value: 23 },
-    #   ]
-    #   period: [
-    #      { time_value: 2019-09-24, y_value: 3 },
-    #      { time_value: 2019-09-25, y_value: 3 },
-    #      { time_value: 2019-09-26, y_value: 4 },
-    #      { time_value: 2019-09-27, y_value: 5 }
-    #      { time_value: 2019-09-28, y_value: 2 }
-    #      { time_value: 2019-09-29, y_value: 3 }
-    #      { time_value: 2019-09-30, y_value: 4 }
-    #   ]
     #
     def initialize(period, period_history=[], aggregate_by="sum", all_history=true)
       @period = period
@@ -127,7 +109,7 @@ module Upstat
 
     def emergency_over_time?
       unless period_history.empty?
-        period_history.select { |p| p[:apparent] == EMERGENCY }.size == OVER_TIME_SIZE
+        period_history.select { |p| p.apparent == EMERGENCY }.size == OVER_TIME_SIZE
       else
         false
       end
@@ -135,7 +117,7 @@ module Upstat
 
     def no_change_over_time?
       unless period_history.empty?
-        period_history.reverse[0..2].select { |p| p[:y_value] == aggregate_total }.size == OVER_TIME_SIZE
+        period_history.reverse[0..2].select { |p| p.y_value == aggregate_total }.size == OVER_TIME_SIZE
       else
         false
       end
@@ -161,8 +143,8 @@ module Upstat
 
     def danger_since?
       if (ndx = find_recent_history_for(AFFLUENCE))
-        since = period_history[ndx][:time_value]
-        period_history.select { |p| p[:time_value] > since && p[:apparent] == DANGER }.any?
+        since = period_history[ndx].time_value
+        period_history.select { |p| p.time_value > since && p.apparent == DANGER }.any?
       else
         false
       end
@@ -177,11 +159,11 @@ module Upstat
     end
 
     def find_recent_history_for(condition)
-      period_history.reverse.index { |p| p[:apparent] == condition }
+      period_history.reverse.index { |p| p.apparent == condition }
     end
 
     def list_y_values(period)
-      period.map { |p| p[:y_value] }
+      period.map { |p| p.y_value }
     end
   end
 end

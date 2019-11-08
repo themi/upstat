@@ -10,14 +10,14 @@ module Upstat
       bop, eop, increment, minimum_date, maximum_date = period_bounds(source_data, period_type)
       periods = [].tap { |collection|
         while bop <= maximum_date
-          sub_periods = source_data.select { |row| row[:time_value] >= bop && row[:time_value] <= eop }.to_openstruct
+          sub_periods = source_data.select { |row| row.time_value >= bop && row.time_value <= eop }.to_openstruct
           stats = Upstat::Conditions.new(sub_periods, collection, aggregrate_by)
-          collection << {
+          collection << OpenStruct.new({
             time_value: eop,
             y_value: stats.aggregate_total,
             apparent: stats.apparent_condition,
             actual: stats.actual_condition
-          }
+          })
           bop = increment.call(bop)
           eop = increment.call(eop)
         end
@@ -30,8 +30,8 @@ module Upstat
 
     def period_bounds(source_data, period_type)
       bop = nil; eop = nil; increment = nil
-      minimum_date = source_data.first[:time_value]
-      maximum_date = source_data.last[:time_value]
+      minimum_date = source_data.first.time_value
+      maximum_date = source_data.last.time_value
 
       case period_type
       when "weekly"
