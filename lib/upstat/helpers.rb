@@ -18,8 +18,7 @@ module Upstat
             apparent: stats.apparent_condition,
             actual: stats.actual_condition
           })
-          bop = increment.call(bop)
-          eop = increment.call(eop)
+          bop, eop = increment.call(bop, eop)
         end
       }
     end
@@ -37,11 +36,11 @@ module Upstat
       when "weekly"
         bop = minimum_date.production_beginning_of_week
         eop = minimum_date.production_end_of_week
-        increment = lambda { |i| i +( DAY_SECONDS * 7) }
+        increment = lambda { |bop, eop| [bop + ( DAY_SECONDS * 7), eop + ( DAY_SECONDS * 7)] }
       when "monthly"
         bop = Time.new(minimum_date.year, minimum_date.month, 1)
         eop = Date.new(minimum_date.year, minimum_date.month, -1).to_time
-        increment = lambda { |i| Time.new(i.year, i.month+1, 1) }
+        increment = lambda { |bop, eop| [bop = Time.new(bop.year, bop.month+1, 1), eop = Date.new(bop.year, bop.month+2, -1).to_time] }
       end
 
       [bop, eop, increment, minimum_date, maximum_date]
