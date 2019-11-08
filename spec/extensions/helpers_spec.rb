@@ -6,7 +6,7 @@ RSpec.describe Extensions::Helpers do
   class TestHelper
     extend Extensions::Helpers
 
-    def self.raw_hash
+    def self.raw_data
       [
         # 1st week - non-existence/non-existence
         OpenStruct.new({ time_value: Time.parse("2018-11-03 13:00:00 +1100"), y_value: 3 }),
@@ -32,11 +32,9 @@ RSpec.describe Extensions::Helpers do
     end
   end
 
-  # Use this to tweak the CONDITIONS_OF_EXISTENCE ranges in file 'lib/upstat/conditions.rb'
-  # Tweak the y_values above and compare the outcomes.
   describe "#calculate_periods" do
     subject { TestHelper.calculate_periods(source_data, period_type, aggregrate_by) }
-    let(:source_data) { TestHelper.raw_hash }
+    let(:source_data) { TestHelper.raw_data }
 
     context "with aggregate: 'sum' and period: 'weekly' " do
       let(:period_type) { "weekly" }
@@ -46,20 +44,24 @@ RSpec.describe Extensions::Helpers do
         expect(subject.size).to eq 4
       end
 
-      it "first period condition is non-exsistence" do
+      it "first period condition is non-exsistence/non-exsistence" do
         expect(subject[0][:apparent]).to eq "non-existence"
+        expect(subject[0][:actual]).to eq "non-existence"
       end
 
-      it "second period condition is affluence" do
+      it "second period condition is affluence/affluence" do
         expect(subject[1][:apparent]).to eq "affluence"
+        expect(subject[1][:actual]).to eq "affluence"
       end
 
-      it "third period condition is normal" do
+      it "third period condition is normal/power" do
         expect(subject[2][:apparent]).to eq "normal"
+        expect(subject[2][:actual]).to eq "power"
       end
 
-      it "fourth period condition is emergency" do
+      it "fourth period condition is emergency/emergency" do
         expect(subject[3][:apparent]).to eq "emergency"
+        expect(subject[3][:actual]).to eq "emergency"
       end
     end
   end

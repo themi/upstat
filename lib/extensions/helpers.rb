@@ -45,17 +45,19 @@ module Extensions
     end
 
     ###
-    # First parse: aggregate into periods, eg. days into weeks, determining the basic condition
+    # Aggregate into periods (eg. days into weeks) and calculate the condition
     #
     def calculate_periods(source_data, period_type="weekly", aggregrate_by="sum")
       bop, eop, increment, minimum_date, maximum_date = period_bounds(source_data, period_type)
       periods = [].tap { |collection|
         while bop <= maximum_date
-          sub_periods = source_data.select { |row| row[:time_value] >= bop && row[:time_value] <= eop }
+          sub_periods = source_data.select { |row| row[:time_value] >= bop && row[:time_value] <= eop }.to_openstruct
+          stats = Upstat::Conditions.new(sub_periods, collection, aggregrate_by)
           collection << {
             time_value: eop,
-            y_value: aggregate_periods(sub_periods, aggregrate_by),
-            apparent: calculate_condition(sub_periods)
+            y_value: stats.aggregate_total,
+            apparent: stats.apparent_condition,
+            actual: stats.actual_condition
           }
           bop = increment.call(bop)
           eop = increment.call(eop)
@@ -63,24 +65,9 @@ module Extensions
       }
     end
 
-    ###
-    # Second parse: further refine the condition influenced by past period conditions
-    #
-    def parse_periods(period_data, period_type="weekly", aggregrate_by="sum")
-
-    end
-
     # -----
     private
     # -----
-
-    def aggregate_periods(sub_periods, aggregrate_by)
-      sub_periods.map { |row| row[:y_value] }.send(aggregrate_by)
-    end
-
-    def calculate_condition(sub_periods)
-      Upstat::Conditions.new(sub_periods).apparent_condition
-    end
 
     def period_bounds(source_data, period_type)
       bop = nil; eop = nil; increment = nil

@@ -48,8 +48,8 @@ module Upstat
       end
     end
 
-    attr_accessor :period, :period_history, :all_history
-    attr_accessor :apparent
+    attr_accessor :period, :period_history, :aggregate_by, :all_history
+    attr_accessor :apparent, :aggregate_total, :y_values
 
     # :period_history is Upstat::DataTable or ActiveRecord of 12 or more __previous__ data points,order by time_value: :ascending and excluding what is within :period
     # :period is  an Upstat::DataTable or ActiveRecord of 3 or more subdivisions of the current or upcoming period (eg. if :period_history is weeks, then :period is days)
@@ -82,19 +82,20 @@ module Upstat
     #      { time_value: 2019-09-30, y_value: 4 }
     #   ]
     #
-    def initialize(period, period_history=[], all_history=true)
+    def initialize(period, period_history=[], aggregate_by="sum", all_history=true)
       @period = period
       @period_history = period_history
+      @aggregate_by = aggregate_by
       @all_history = all_history
+      @y_values = list_y_values(period)
+      @aggregate_total = y_values.send(aggregate_by)
     end
 
     # Calculate the condition for the data points within period.
     # This is the first parse, determines the linear regression slope
     # of data points within :period array and then converted to a "condition"
     def apparent_condition
-      y_values = list_y_values(period)
-
-      if y_values.size <= 1
+      if y_values.size < OVER_TIME_SIZE
         @apparent = NON_EXISTENCE
       else
         trend = Trend.new(y_values)
@@ -126,7 +127,7 @@ module Upstat
 
     def emergency_over_time?
       unless period_history.empty?
-        period_history.select { |p| p.apparent == EMERGENCY }.size == OVER_TIME_SIZE
+        period_history.select { |p| p[:apparent] == EMERGENCY }.size == OVER_TIME_SIZE
       else
         false
       end
@@ -134,7 +135,7 @@ module Upstat
 
     def no_change_over_time?
       unless period_history.empty?
-        period_history.select { |p| p.y_value == period.y_value }.size == OVER_TIME_SIZE
+        period_history.reverse[0..2].select { |p| p[:y_value] == aggregate_total }.size == OVER_TIME_SIZE
       else
         false
       end
@@ -160,8 +161,8 @@ module Upstat
 
     def danger_since?
       if (ndx = find_recent_history_for(AFFLUENCE))
-        since = period_history[ndx].time_value
-        period_history.select { |p| p.time_value > since && p.apparent == DANGER }.any?
+        since = period_history[ndx][:time_value]
+        period_history.select { |p| p[:time_value] > since && p[:apparent] == DANGER }.any?
       else
         false
       end
@@ -176,11 +177,11 @@ module Upstat
     end
 
     def find_recent_history_for(condition)
-      period_history.reverse.index { |p| p.apparent == condition }
+      period_history.reverse.index { |p| p[:apparent] == condition }
     end
 
     def list_y_values(period)
-      period.map { |p| p.y_value }
+      period.map { |p| p[:y_value] }
     end
   end
 end
